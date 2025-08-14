@@ -1,21 +1,10 @@
-package com.GestorDeCitas.Backend.model;
+package com.GestorDeCitas.Backend.models;
 
 
-import jakarta.annotation.sql.DataSourceDefinition;
-import jakarta.persistence.*;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-
-@Entity
 @Data
 @NoArgsConstructor
+
 @ToString
 
 @Table(name = "usuarios",
@@ -24,14 +13,14 @@ import javax.validation.constraints.Size;
                 @UniqueConstraint(columnNames = {"username"}),//Esto es para evitar que se repita el nombre de usuario
                 @UniqueConstraint(columnNames = {"email"})//Esto es para evitar que se repita el email
         })
-public class Usuarios {
-     @Id// Esto es para indicar que es la llave primaria
+public class Empleado {
+    @Id// Esto es para indicar que es la llave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
     @NotBlank// Esto es para indicar que no puede estar en blanco
-   @Size(min = 1, max = 20)// Esto es para indicar el tamaño mínimo y máximo
+    @Size(min = 1, max = 20)// Esto es para indicar el tamaño mínimo y máximo
     private String username;
 
     @NotBlank
@@ -41,17 +30,16 @@ public class Usuarios {
 
     private String password;
 
+
+
     @ManyToMany(fetch= FetchType.EAGER)
     @JoinTable(name = "usuarios_roles",
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private java.util.Set<Roles> roles = new java.util.HashSet<>();
 
-
-   
-    public Usuarios (String username, String email, String password) {
+    public Empleado(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-}
-}
+    }
