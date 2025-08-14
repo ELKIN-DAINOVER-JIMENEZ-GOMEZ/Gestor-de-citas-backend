@@ -1,7 +1,15 @@
 package com.GestorDeCitas.Backend.models;
 
+import com.GestorDeCitas.Backend.models.Roles.Roles;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-
+@Entity
 @Data
 @NoArgsConstructor
 
@@ -13,7 +21,7 @@ package com.GestorDeCitas.Backend.models;
                 @UniqueConstraint(columnNames = {"username"}),//Esto es para evitar que se repita el nombre de usuario
                 @UniqueConstraint(columnNames = {"email"})//Esto es para evitar que se repita el email
         })
-public class Empleado {
+public class Users {
     @Id// Esto es para indicar que es la llave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,8 +46,11 @@ public class Empleado {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private java.util.Set<Roles> roles = new java.util.HashSet<>();
 
-    public Empleado(String username, String email, String password) {
+    public Users(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
     }
+
+
+}
