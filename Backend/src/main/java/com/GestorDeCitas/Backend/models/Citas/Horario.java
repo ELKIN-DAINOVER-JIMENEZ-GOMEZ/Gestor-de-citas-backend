@@ -4,13 +4,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
+@Entity
+@Table(name = "horarios", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"fecha", "hora"})
+})
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Horario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
