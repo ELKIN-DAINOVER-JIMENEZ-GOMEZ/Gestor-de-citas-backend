@@ -33,7 +33,5 @@ build/
 .vscode/
 
 # Variables de entorno - ¡IMPORTANTE!
-.env
-.env.local
-.env.development
-.env.production
+src/main/resources/secrets.properties
+
