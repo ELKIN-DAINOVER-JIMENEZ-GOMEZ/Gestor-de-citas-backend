@@ -19,7 +19,7 @@ public class SignUpRequest {
     private String email; // Correo electrónico del nuevo empleado
 
     @NotBlank
-    @Size(min = 6, max = 20)
+    @Size(min = 6, max = 19)
     private String password; // Contraseña del nuevo empleado
 
     private String role;// Rol del nuevo empleado
