@@ -20,12 +20,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class AuthServiceImpl implements AuthService {
 
     @Autowired
@@ -62,7 +64,7 @@ public class AuthServiceImpl implements AuthService {
         if ("admin".equalsIgnoreCase(signUpRequest.getRole())) {
 
             // Permitir crear el primer administrador si no existe ninguno
-            boolean adminExists = userRepository.existsByRoles_Role(ERole.ROLE_ADMIN);
+            boolean adminExists = userRepository.existsByRole_Role(ERole.ROLE_ADMIN);
             //Verificar si el usuario que hace la solicitud es un administrador
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (adminExists && (authentication == null || !authentication.getAuthorities().stream()
@@ -83,8 +85,7 @@ public class AuthServiceImpl implements AuthService {
 
         );
 
-        // Asignar roles
-        Set<Roles> roles = new HashSet<>();
+        // Asignar role
         Roles userRole;
 
         if ("admin".equalsIgnoreCase(signUpRequest.getRole())) {
@@ -95,8 +96,9 @@ public class AuthServiceImpl implements AuthService {
                     .orElseThrow(() -> new RuntimeException("Error: Rol de paciente no encontrado."));
         }
 
-        roles.add(userRole);
-        user.setRoles(roles);
+        //Asignar el rol directamente al usuario
+        user.setRole(userRole);
+        //Guardar en base de datos
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("Usuario registrado correctamente"));

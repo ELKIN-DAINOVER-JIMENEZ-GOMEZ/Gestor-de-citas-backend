@@ -33,15 +33,13 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public static UserDetailsImpl build(Users usuarios){
-        List<GrantedAuthority> authorities = usuarios.getRoles().stream()
-                .map(roles -> new SimpleGrantedAuthority(roles.getRole().name()))
-                .collect(Collectors.toList());
+        GrantedAuthority authority = new SimpleGrantedAuthority(usuarios.getRole().getRole().name());//obtiene el unico rol que tiene el usuario
         return new UserDetailsImpl(
 
                 usuarios.getUsername(),
                 usuarios.getEmail(),
                 usuarios.getPassword(),
-                authorities
+                List.of(authority)//crea una lista con el rol del usuario
         );
     }
 

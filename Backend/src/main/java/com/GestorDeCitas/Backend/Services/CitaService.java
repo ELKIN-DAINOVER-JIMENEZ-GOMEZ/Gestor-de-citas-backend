@@ -7,11 +7,12 @@ import com.GestorDeCitas.Backend.exceptions.HorarioNoDisponibleException;
 import com.GestorDeCitas.Backend.models.Citas.Citas;
 import com.GestorDeCitas.Backend.models.Citas.EstadoCita;
 import com.GestorDeCitas.Backend.repository.CitaRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
 public class CitaService {
 
     private CitaRepository citaRepository;
