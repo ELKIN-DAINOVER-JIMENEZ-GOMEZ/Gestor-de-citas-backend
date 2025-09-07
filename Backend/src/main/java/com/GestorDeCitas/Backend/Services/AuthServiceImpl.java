@@ -48,17 +48,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public ResponseEntity<?>registerUser(SignUpRequest signUpRequest) {
 
-        // Verificar si el username existe
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity.badRequest()
-                    .body(new MessageResponse("Error: El nombre de usuario ya existe"));
-        }
-
-        // Verificar si el email ya existe
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity.badRequest()
-                    .body(new MessageResponse("Error: El email ya existe"));
-        }
 
         // Verificar permisos si se intenta crear un admin
         if ("admin".equalsIgnoreCase(signUpRequest.getRole())) {
