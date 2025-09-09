@@ -83,10 +83,25 @@ public class CitaController {
 
             return ResponseEntity.ok(response);
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            // Capturar errores específicos como "Usuario no encontrado"
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
-            errorResponse.put("message", "Error al obtener las citas");
+            errorResponse.put("message", "Error de autenticación: " + e.getMessage());
+            errorResponse.put("error", "AUTHENTICATION_ERROR");
+
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+
+        } catch (Exception e) {
+            // Log del error para debugging
+            System.err.println("Error al obtener citas: " + e.getMessage());
+            e.printStackTrace();
+
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", "Error interno del servidor");
+            errorResponse.put("error", "INTERNAL_SERVER_ERROR");
+            errorResponse.put("details", e.getMessage()); // Solo para desarrollo
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
@@ -207,6 +222,25 @@ public class CitaController {
             errorResponse.put("message", e.getMessage());
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+    }
+    // Eliminar cita permanentemente
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> eliminarCita(@PathVariable Long id) {
+        try {
+            citaService.eliminarCita(id);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("message", "Cita eliminada exitosamente");
+
+            return ResponseEntity.ok(response);
+
+        } catch (CitaNotFoundException e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("message", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 

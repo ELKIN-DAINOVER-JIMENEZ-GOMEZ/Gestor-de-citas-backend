@@ -78,6 +78,8 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/citas/fecha/**").hasRole("ADMIN")
                                 .requestMatchers("/api/citas/*/estado").hasRole("ADMIN")
                                 .requestMatchers("/api/citas/*/cancelar").hasAnyRole("PACIENTE", "ADMIN")
+
+                                .requestMatchers("/api/citas/*").hasAnyRole("PACIENTE","ADMIN")
                                 .requestMatchers("/api/citas/**").hasRole("ADMIN")
 
 

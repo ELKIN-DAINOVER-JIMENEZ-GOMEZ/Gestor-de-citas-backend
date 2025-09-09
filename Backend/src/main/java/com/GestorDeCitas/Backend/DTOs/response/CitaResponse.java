@@ -1,6 +1,7 @@
 package com.GestorDeCitas.Backend.DTOs.response;
 
 import com.GestorDeCitas.Backend.models.Citas.EstadoCita;
+import com.GestorDeCitas.Backend.DTOs.response.UserInfoResponse;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,4 +30,6 @@ public class CitaResponse {
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fechaCreacion;
+
+    private UserInfoResponse usuario;
 }
