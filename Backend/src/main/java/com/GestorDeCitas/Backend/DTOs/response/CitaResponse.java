@@ -32,4 +32,7 @@ public class CitaResponse {
     private LocalDateTime fechaCreacion;
 
     private UserInfoResponse usuario;
+
+
+
 }

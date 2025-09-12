@@ -11,9 +11,12 @@ import com.GestorDeCitas.Backend.models.Users;
 import com.GestorDeCitas.Backend.repository.CitaRepository;
 import com.GestorDeCitas.Backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,8 +30,16 @@ public class CitaService {
     @Autowired
     private UserRepository usuarioRepository;
 
-    // Obtener usuario autenticado
 
+    // Helper para verificar si el usuario es admin
+    private boolean esAdmin(Users usuario) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+    }
+
+    // Obtener usuario autenticado
     private Users getUsuarioAutenticado() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName(); // El token provee el username
@@ -75,26 +86,34 @@ public class CitaService {
     }
 
     // Obtener todas las citas - Método mejorado
+    @Transactional(readOnly = true)//Evita que se actualice la base de datos
     public List<CitaResponse> obtenerTodasLasCitas() {
         try {
             Users usuario = getUsuarioAutenticado();
 
-            List<Citas> citas = citaRepository.findByUsuarioOrderByFechaAscHoraAsc(usuario);
+            List<Citas> citas;
+            if (esAdmin(usuario)) {
+                // Si es ADMIN, trae TODAS las citas
+                System.out.println("---[INFO]--- Usuario es ADMIN. Obteniendo todas las citas.");
+                citas = citaRepository.findAll(Sort.by(Sort.Direction.ASC, "fecha", "hora"));
+            } else {
+                // Si es PACIENTE, trae solo sus citas (como antes)
+                System.out.println("---[INFO]--- Usuario es PACIENTE. Obteniendo sus citas.");
+                citas = citaRepository.findByUsuarioOrderByFechaAscHoraAsc(usuario);
+            }
 
-            // Verificar si la lista es null (aunque no debería ser con JPA)
             if (citas == null) {
                 return new ArrayList<>();
             }
 
             return citas.stream()
-                    .map(this::convertirAResponseDTO)
+                    .map(this::convertirAResponseDTO) // Ahora incluirá la info del paciente
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
-            // Log el error específico
             System.err.println("Error en obtenerTodasLasCitas: " + e.getMessage());
             e.printStackTrace();
-            throw e; // Re-lanzar para que el controller lo maneje
+            throw e;
         }
     }
 
