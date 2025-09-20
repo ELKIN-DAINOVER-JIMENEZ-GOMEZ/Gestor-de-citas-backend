@@ -1,8 +1,10 @@
-
 FROM eclipse-temurin:21-jdk-alpine AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY Backend/pom.xml .
+COPY Backend/src ./src
+COPY Backend/mvnw .
+COPY Backend/.mvn ./.mvn
+COPY Backend/.gitignore .
 RUN ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
