@@ -5,6 +5,7 @@ COPY Backend/src ./src
 COPY Backend/mvnw .
 COPY Backend/.mvn ./.mvn
 COPY Backend/.gitignore .
+RUN chmod +x ./mvnw
 RUN ./mvnw clean package -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
