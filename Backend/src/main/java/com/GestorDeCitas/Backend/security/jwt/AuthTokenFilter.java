@@ -37,6 +37,14 @@ public class AuthTokenFilter  extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        String path = request.getServletPath();
+
+        // Ignorar rutas públicas
+        if (path.startsWith("/api/auth/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         try {
             String token = getTokenFromRequest(request);
             if (token != null && jwtUtils.validateJwtToken(token)) {
