@@ -101,7 +101,11 @@ public class WebSecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         // Asegúrate de cambiar "http://localhost:4200" por el origen de tu frontend
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:5173",
+                "https://gestor-de-citas-frontend-qvmc.vercel.app"
+        ));
 
         //Metodos http permitidos
         configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
