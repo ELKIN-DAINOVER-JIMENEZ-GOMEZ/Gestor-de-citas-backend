@@ -24,7 +24,8 @@ public class AuthTokenFilter  extends OncePerRequestFilter {
 
     @Autowired
     private JwtUtils jwtUtils;
-    @Autowired private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     private String getTokenFromRequest(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
