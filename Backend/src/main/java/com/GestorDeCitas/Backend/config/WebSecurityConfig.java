@@ -65,7 +65,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 // Rutas públicas de autenticación
-                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/auth/**").permitAll().anyRequest().authenticated()
 
                                 // NUEVAS RUTAS PARA CITAS - Pacientes (ROLE_PACIENTE)
                                 .requestMatchers("/api/citas").hasAnyRole("PACIENTE", "ADMIN")
