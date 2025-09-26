@@ -38,6 +38,7 @@ public class AuthTokenFilter  extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         String path = request.getServletPath();
+        logger.info("SOLICITUD RECIBIDA: Method={}, Path={}", request.getMethod(), path);
 
         // Ignorar rutas públicas
         if (path.startsWith("/api/auth/")) {
