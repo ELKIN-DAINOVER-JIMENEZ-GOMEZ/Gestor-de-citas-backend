@@ -19,7 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/citas")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin (origins ={ "http://localhost:5173", "https://gestor-de-citas-dental-care.onrender.com"})
 public class CitaController {
     @Autowired
     private CitaService citaService;

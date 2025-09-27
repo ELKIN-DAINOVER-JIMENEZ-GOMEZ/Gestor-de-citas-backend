@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = {"http://localhost:5173", "https://gestor-de-citas-frontend-qvmc.vercel.app"},
+@CrossOrigin(origins = {"http://localhost:5173", "https://gestor-de-citas-dental-care.onrender.com"},
         allowCredentials = "true",
         allowedHeaders = "*",
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})

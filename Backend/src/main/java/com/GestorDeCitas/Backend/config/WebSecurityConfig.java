@@ -105,7 +105,7 @@ public class WebSecurityConfig {
 
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:5173",
-                "https://gestor-de-citas-frontend-qvmc.vercel.app"
+                "https://gestor-de-citas-dental-care.onrender.com"
         ));
 
         //Metodos http permitidos
