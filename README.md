@@ -85,7 +85,8 @@
 ## 📚 Documentación de la API
 ### Endpoints de Autenticación
 - Registro de Usuario
-  POST /api/auth/register
+ ```
+ POST /api/auth/register
 Content-Type: application/json
 
 {
@@ -94,7 +95,9 @@ Content-Type: application/json
   "password": "password123",
   "rol": "PACIENTE"
 }
+```
 - Login
+ ```
   POST /api/auth/login
 Content-Type: application/json
 
@@ -102,16 +105,18 @@ Content-Type: application/json
   "email": "juan@example.com",
   "password": "password123"
 }
-
+```
 - Respuesta:
+   ```
   {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
   "tipo": "Bearer",
   "email": "juan@example.com",
   "rol": "PACIENTE"
-
+  ```
 ### Endpoints de Citas
 - Crear Cita (Paciente)
+```
   POST /api/citas
 Authorization: Bearer {token}
 Content-Type: application/json
@@ -121,13 +126,15 @@ Content-Type: application/json
   "motivo": "Consulta general",
   "descripcion": "Control de rutina"
 }
-
+```
 - Obtener Mis Citas (Paciente)
+```
   GET /api/citas/mis-citas
 Authorization: Bearer {token}GET /api/citas/mis-citas
 Authorization: Bearer {token}
-
+```
 - Gestionar Citas (Administrativo)
+```
   GET /api/citas/todas
 Authorization: Bearer {token}
 
@@ -138,9 +145,10 @@ Content-Type: application/json
 {
   "estado": "APROBADA"
 }
-
+```
 ### Endpoints de Horarios
 - Crear Horario (Administrativo)
+```
   POST /api/horarios
 Authorization: Bearer {token}
 Content-Type: application/json
@@ -151,13 +159,16 @@ Content-Type: application/json
   "horaFin": "10:00",
   "disponible": true
 }
+```
 
 - Obtener Horarios Disponibles
+```
   GET /api/horarios/disponibles
 Authorization: Bearer {token}
-
+```
 ### Endpoints de Mensajería
 - Enviar Mensaje
+```
   POST /api/mensajes
 Authorization: Bearer {token}
 Content-Type: application/json
@@ -167,11 +178,12 @@ Content-Type: application/json
   "asunto": "Consulta sobre cita",
   "contenido": "Quisiera reprogramar mi cita..."
 }
-
+```
 - Obtener Mis Mensajes
+```
   GET /api/mensajes/recibidos
 Authorization: Bearer {token}
-
+```
 ## 👥 Autor
 ### Elkin Jimenez
 
